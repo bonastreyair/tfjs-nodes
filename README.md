@@ -16,9 +16,7 @@ You have two options to install the node.
 
 ## Overview
 This package contains 4 nodes
- - **tf predict** - Runs tf.predict against any tensorflow model you import
- - **tf mobilenet** - Runs the pretrained mobilenet classifier
- - **tf coco ssd** - Runs the COCO Single Shot Detector against a file or a buffer of a jpg image
- - **tf posenet** - Runs the Posenet body parts pretrained model against a file or a buffer of a jpg image
-
-**Note:** `tensorflow.js` is only available in 64-bit, so it will not run on 32-bit operating systems like Raspbian.
+ - **tf predict** - Runs `tf.predict` against any tensorflow model you import against a file or a buffer of a jpg image
+ - **tf mobilenet** - Runs the  `mobilenet classifier` pretrained model against a file or a buffer of a jpg image
+ - **tf coco ssd** - Runs the `coco single shot detector` pretrained model against a file or a buffer of a jpg image
+ - **tf posenet** - Runs the `posenet detector` pretrained model against a file or a buffer of a jpg image
