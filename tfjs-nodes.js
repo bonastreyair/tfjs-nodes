@@ -8,8 +8,9 @@ module.exports = function(RED) {
     global.fetch = require('node-fetch')
 
     RED.httpNode.use(compression())
-    RED.httpNode.use('/coco', express.static(__dirname + '/models/coco-ssd'))
-    RED.httpNode.use('/mobilenet', express.static(__dirname + '/models/mobilenetv1'))
+    RED.httpNode.use('/coco', express.static(__dirname + '/models/coco'))
+    RED.httpNode.use('/mobilenet', express.static(__dirname + '/models/mobilenet'))
+    RED.httpNode.use('/posenet', express.static(__dirname + '/models/posenet'))
 
     function setNodeStatus(node, status) {
         switch (status) {
@@ -83,7 +84,6 @@ module.exports = function(RED) {
         }
         return classes
     }
-
 
     // Predict Model
     function tensorflowPredict(config) {
@@ -172,7 +172,6 @@ module.exports = function(RED) {
         node.on('close', function() { setNodeStatus(node, 'close') })
     }
 
-
     // MobileNet Model
     function tensorflowMobilenet(config) {
         const mobilenet = require('@tensorflow-models/mobilenet')
@@ -215,7 +214,6 @@ module.exports = function(RED) {
             const results = {
                 classification: filteredClassification
             }
-
             return results
         }
 
@@ -234,12 +232,10 @@ module.exports = function(RED) {
                     }
                 })
         })
-
         node.on('close', function() { setNodeStatus(node, 'close') })
     }
 
-
-    // CoCo SSD Model
+    // Coco SSD Model
     function tensorflowCocoSsd(config) {
         const cocoSsd = require('@tensorflow-models/coco-ssd')
 
@@ -274,9 +270,8 @@ module.exports = function(RED) {
             setNodeStatus(node, 'infering')
             const tensorImage = tf.node.decodeImage(image)
             const detections = await node.model.detect(tensorImage, params.maxDetections)
-            const filteredDetections = filterThreshold(detections, params.threshold) // Deep copy
+            const filteredDetections = filterThreshold(detections, params.threshold)
             const classes = countClasses(filteredDetections)
-                // const filteredResultsModified =
 
             tf.dispose(tensorImage) // Free space
 
@@ -284,7 +279,6 @@ module.exports = function(RED) {
                 filteredDetections: filteredDetections,
                 classes: classes
             }
-
             return results
         }
 
@@ -311,8 +305,7 @@ module.exports = function(RED) {
         node.on('close', function() { setNodeStatus(node, 'close') })
     }
 
-
-    // PoseNet Model
+    // Posenet Model
     function tensorflowPosenet(config) {
         const posenet = require('@tensorflow-models/posenet')
 
@@ -352,7 +345,6 @@ module.exports = function(RED) {
                 scoreThreshold: params.threshold / 100,
                 nmsRadius: 20
             })
-
             const filteredResults = filterThreshold(poses, params.threshold)
 
             tf.dispose(tensorImage) // Free space

@@ -1,5 +1,4 @@
-[
-    {
+[{
         "id": "bbda5864.53c288",
         "type": "debug",
         "z": "cf2bd91e.ad21d8",
@@ -11,7 +10,7 @@
         "complete": "true",
         "targetType": "full",
         "x": 670,
-        "y": 380,
+        "y": 420,
         "wires": []
     },
     {
@@ -28,14 +27,14 @@
         "proxy": "",
         "authType": "",
         "x": 280,
-        "y": 260,
+        "y": 240,
         "wires": [
             [
                 "26495668.9c6a7a",
-                "b1184921.04e888",
-                "f8f4402d.cf88d",
-                "296e4634.70d82a",
-                "23484de6.80fe22"
+                "81fe98e0.9146f8",
+                "f59e632e.66015",
+                "a7af9a0b.739208",
+                "8b05fc9f.cd025"
             ]
         ]
     },
@@ -52,7 +51,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 120,
-        "y": 260,
+        "y": 240,
         "wires": [
             [
                 "3ae3a7ce.3516b8"
@@ -71,7 +70,7 @@
         "complete": "true",
         "targetType": "full",
         "x": 670,
-        "y": 440,
+        "y": 240,
         "wires": []
     },
     {
@@ -86,7 +85,7 @@
         "complete": "true",
         "targetType": "full",
         "x": 670,
-        "y": 320,
+        "y": 360,
         "wires": []
     },
     {
@@ -101,25 +100,8 @@
         "complete": "true",
         "targetType": "full",
         "x": 670,
-        "y": 260,
+        "y": 300,
         "wires": []
-    },
-    {
-        "id": "b1184921.04e888",
-        "type": "tensorflowPredict",
-        "z": "cf2bd91e.ad21d8",
-        "name": "",
-        "mode": "online",
-        "modelUrl": "https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json",
-        "localModel": "model1",
-        "threshold": 50,
-        "x": 500,
-        "y": 260,
-        "wires": [
-            [
-                "5ee24358.a6172c"
-            ]
-        ]
     },
     {
         "id": "26495668.9c6a7a",
@@ -133,20 +115,20 @@
         "active": true,
         "outputs": 0,
         "x": 520,
-        "y": 500,
+        "y": 480,
         "wires": []
     },
     {
-        "id": "f8f4402d.cf88d",
-        "type": "tensorflowMobilenet",
+        "id": "81fe98e0.9146f8",
+        "type": "tensorflowCocoSsd",
         "z": "cf2bd91e.ad21d8",
         "name": "",
-        "mode": "online",
-        "modelUrl": "",
-        "localModel": "mobilenet",
+        "modelUrl": "http://localhost:1880/coco/model.json",
         "threshold": 50,
+        "maxDetections": 4,
+        "passthru": false,
         "x": 510,
-        "y": 320,
+        "y": 360,
         "wires": [
             [
                 "7fa11aa2.bfae44"
@@ -154,17 +136,32 @@
         ]
     },
     {
-        "id": "296e4634.70d82a",
-        "type": "tensorflowCocoSsd",
+        "id": "f59e632e.66015",
+        "type": "tensorflowMobilenet",
         "z": "cf2bd91e.ad21d8",
         "name": "",
-        "mode": "local",
-        "modelUrl": "",
+        "modelUrl": "http://localhost:1880/mobilenet/model.json",
+        "threshold": 25,
+        "passthru": false,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "5ee24358.a6172c"
+            ]
+        ]
+    },
+    {
+        "id": "a7af9a0b.739208",
+        "type": "tensorflowPosenet",
+        "z": "cf2bd91e.ad21d8",
+        "name": "",
+        "modelUrl": "http://localhost:1880/posenet/model.json",
         "threshold": 50,
         "maxDetections": 4,
         "passthru": false,
-        "x": 510,
-        "y": 380,
+        "x": 500,
+        "y": 420,
         "wires": [
             [
                 "bbda5864.53c288"
@@ -172,17 +169,17 @@
         ]
     },
     {
-        "id": "23484de6.80fe22",
-        "type": "tensorflowPosenet",
+        "id": "8b05fc9f.cd025",
+        "type": "tensorflowPredict",
         "z": "cf2bd91e.ad21d8",
         "name": "",
         "mode": "online",
-        "modelUrl": "",
-        "localModel": "posenet",
+        "modelUrl": "https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json",
+        "localModel": "model1",
         "threshold": 50,
-        "maxDetections": 4,
+        "passthru": false,
         "x": 500,
-        "y": 440,
+        "y": 240,
         "wires": [
             [
                 "8d415c29.2d40a"
